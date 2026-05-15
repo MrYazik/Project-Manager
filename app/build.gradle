@@ -43,7 +43,7 @@ application {
     mainClass = 'mryazik.github.io.App'
 }
 
-tasks.named('test') {
-    // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
+run {
+    // Настраиваем classpath сразу на этапе конфигурации
+    classpath = sourceSets.main.runtimeClasspath
 }

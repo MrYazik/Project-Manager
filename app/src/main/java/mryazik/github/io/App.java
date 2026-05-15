@@ -36,13 +36,14 @@ public class App extends Application {
     {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/BorderPane.fxml"));
-
             rootLayout = loader.load();
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
 
             // загружаем главный VBox
+            layoutLoad.loadVBoxInLeft("left-control-list.fxml");
+            layoutLoad.loadVBoxInCenter("all-projects.fxml");
 
             primaryStage.show();
         } catch (Exception e)
