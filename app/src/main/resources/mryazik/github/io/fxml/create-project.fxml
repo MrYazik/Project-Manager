@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="328.0" prefWidth="528.0" styleClass="create_trainers_vbox" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox>
+         <children>
+            <Label text="Создание нового проекта" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <Label text="Заложите фундамент  вашей новой идеи" textFill="#8b949e">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin>
+      </VBox>
+      <VBox>
+         <children>
+            <Label text="Имя проекта" textFill="#8b949e">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </Label>
+            <TextField prefHeight="46.0" prefWidth="486.0" promptText="Например: Modular Backpack Mod" styleClass="create_trainers_input_name_vbox">
+               <font>
+                  <Font name="System Italic" size="15.0" />
+               </font>
+            </TextField>
+         </children>
+         <VBox.margin>
+            <Insets bottom="25.0" />
+         </VBox.margin>
+      </VBox>
+      <VBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="50.0" styleClass="create_trainers_notion">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>

@@ -4,11 +4,14 @@
 package mryazik.github.io;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.layout.BorderPane;
 
+import javafx.stage.StageStyle;
 import mryazik.github.io.Classes.layoutLoad;
 
 

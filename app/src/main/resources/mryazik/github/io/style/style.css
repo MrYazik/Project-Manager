@@ -1,9 +1,77 @@
-* {
-    -fx-background-color: rgb(39, 39, 41);
-}
-
 .all_project {
     -fx-background-color: #37373f;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
+}
+
+/* Create Trainers */
+
+.create_trainers_vbox {
+    -fx-border-radius: 19;
+    -fx-background-radius: 19;
+    -fx-border-color: #424d53;
+    -fx-border-width: 3;
+    -fx-background-color: #161b22;
+}
+
+.create_trainers_input_name_vbox {
+    -fx-border-radius: 10;
+    -fx-background-radius: 25;
+    -fx-border-color: #424d53;
+    -fx-border-width: 3;
+    -fx-background-color: #161b22;
+    -fx-text-fill: #a9a9a9;
+}
+
+.create_trainers_notion {
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #292541;
+    -fx-border-width: 3;
+    -fx-background-color: #1d1f2c;
+    -fx-color: #a9a9a9;
+}
+
+/* Left Menu */
+
+.left-menu-main {
+    -fx-border-radius: 19;
+    -fx-background-radius: 19;
+    -fx-border-color: #30363d;
+    -fx-border-width: 3;
+    -fx-background-color: #181a1c;
+}
+
+.left-menu-header {
+    -fx-border-color: transparent transparent #30363d transparent;
+    -fx-border-width: 3;
+}
+
+.left-my-project-menu {
+    -fx-background-color: #181a1c;
+}
+.left-my-project-scrollpane {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.left-new-project-button {
+    -fx-border-color: transparent;
+    -fx-border-radius: 7;
+    -fx-background-radius: 7;
+    -fx-background-color: #8b5cf6;
+}
+
+.left-select-project-button {
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #8b5cf6;
+    -fx-border-width: 1.4;
+    -fx-background-color: #231f32;
+    -fx-text-fill: #c8d1d9;
+}
+
+.viewport {
+    -fx-background-color: transparent;
 }
