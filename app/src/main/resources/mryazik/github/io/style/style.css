@@ -4,6 +4,10 @@
     -fx-background-radius: 5;
 }
 
+.main-border-pane {
+    -fx-background-color: #181a1c;
+}
+
 /* Create Trainers */
 
 .create_trainers_vbox {
@@ -75,3 +79,4 @@
 .viewport {
     -fx-background-color: transparent;
 }
+
