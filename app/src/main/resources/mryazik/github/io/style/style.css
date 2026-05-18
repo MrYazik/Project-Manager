@@ -15,7 +15,8 @@
     -fx-background-radius: 19;
     -fx-border-color: #424d53;
     -fx-border-width: 3;
-    -fx-background-color: #161b22;
+    -fx-background-color: #424d53, #161b22;
+    -fx-border-insets: 0.5;
 }
 
 .create_trainers_input_name_vbox {
@@ -60,11 +61,23 @@
     -fx-padding: 0;
 }
 
-.left-new-project-button {
+.left-new-project-button, .done_button, .back_button {
     -fx-border-color: transparent;
     -fx-border-radius: 7;
     -fx-background-radius: 7;
     -fx-background-color: #8b5cf6;
+}
+
+.back_button {
+    -fx-background-color: #181a1c;
+    -fx-text-fill: #8b949e;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+}.back_button:hover {
+    -fx-background-color: #22272d;
+    -fx-text-fill: WHITE;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
 }
 
 .left-select-project-button {

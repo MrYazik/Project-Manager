@@ -14,14 +14,14 @@ public class getSystemAppPath {
         String systemName = getOSName.get();
 
         if (systemName.contains("mac")) {
-            String userHome = System.getProperty("user.home") + "/Applications/" + appName;
+            String userHome = System.getProperty("user.home") + "/Applications/" + appName + "/projects";
             return Paths.get(userHome);
         } else if (systemName.contains("win")) {
-            String userHome = System.getProperty("user.home") + "/AppData/" + appName;
+            String userHome = System.getProperty("user.home") + "/AppData/" + appName + "/projects";
             return Paths.get(userHome);
         } else if (systemName.contains("nix"))
         {
-            String userHome = "/var/lib/" + appName;
+            String userHome = "/var/lib/" + appName + "/projects";
             return Paths.get(userHome);
         } else {
             logger.log(Level.SEVERE, "Не удалось определить имя системы. systemName: " + systemName);

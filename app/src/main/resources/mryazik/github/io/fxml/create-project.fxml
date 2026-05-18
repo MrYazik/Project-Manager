@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="328.0" prefWidth="528.0" styleClass="create_trainers_vbox" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="328.0" prefWidth="528.0" styleClass="create_trainers_vbox" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mryazik.github.io.Controllers.createProjects">
    <children>
       <VBox>
          <children>
@@ -36,7 +42,7 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </Label>
-            <TextField prefHeight="46.0" prefWidth="486.0" promptText="Например: Modular Backpack Mod" styleClass="create_trainers_input_name_vbox">
+            <TextField fx:id="input_name_projects" prefHeight="46.0" prefWidth="486.0" promptText="Например: Modular Backpack Mod" styleClass="create_trainers_input_name_vbox">
                <font>
                   <Font name="System Italic" size="15.0" />
                </font>
@@ -46,11 +52,59 @@
             <Insets bottom="25.0" />
          </VBox.margin>
       </VBox>
-      <VBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="50.0" styleClass="create_trainers_notion">
+      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="53.0" prefWidth="481.0" styleClass="create_trainers_notion">
          <VBox.margin>
             <Insets />
          </VBox.margin>
-      </VBox>
+         <children>
+            <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+               <image>
+                  <Image url="@../icons/magic.png" />
+               </image>
+               <effect>
+                  <Shadow height="1.0" radius="0.0" width="0.0">
+                     <color>
+                        <Color red="0.506716251373291" green="0.13259999454021454" blue="0.7799999713897705" />
+                     </color>
+                  </Shadow>
+               </effect>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label prefHeight="41.0" prefWidth="394.0" style="-fx-font-weight: bold; -fx-font-style: italic;" text="Мы автоматически создадим README.md и инициализируем пустую  Kanban-доску" textFill="#8b949e" wrapText="true">
+               <HBox.margin>
+                  <Insets left="7.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="BOTTOM_RIGHT" prefHeight="1000.0">
+         <children>
+            <Button fx:id="back" mnemonicParsing="false" prefHeight="33.0" prefWidth="79.0" styleClass="back_button" text="Отмена">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="done" mnemonicParsing="false" prefHeight="33.0" prefWidth="79.0" styleClass="done_button" text="Готово" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </HBox>
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

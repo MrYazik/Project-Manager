@@ -46,7 +46,7 @@ public class App extends Application {
 
             // загружаем главный VBox
             layoutLoad.loadVBoxInLeft("left-control-list.fxml");
-            layoutLoad.loadVBoxInCenter("all-projects.fxml");
+            layoutLoad.loadVBoxInCenter("standart_menu.fxml");
 
             primaryStage.show();
         } catch (Exception e)
