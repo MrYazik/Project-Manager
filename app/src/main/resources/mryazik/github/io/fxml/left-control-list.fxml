@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="0.0" minWidth="-Infinity" prefHeight="409.0" prefWidth="234.0" styleClass="left-menu-main" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="0.0" minWidth="-Infinity" prefHeight="409.0" prefWidth="234.0" styleClass="left-menu-main" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mryazik.github.io.Controllers.leftMenu">
    <children>
       <VBox minHeight="0.0">
          <children>
@@ -190,7 +190,7 @@
             <Insets left="5.0" right="5.0" />
          </VBox.margin>
          <children>
-            <Button graphicTextGap="9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="34.0" prefWidth="217.0" styleClass="left-new-project-button" text="Новый проект" textFill="WHITE">
+            <Button fx:id="create_project" graphicTextGap="9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="34.0" prefWidth="217.0" styleClass="left-new-project-button" text="Новый проект" textFill="WHITE">
                <font>
                   <Font name="System Bold Italic" size="13.0" />
                </font>

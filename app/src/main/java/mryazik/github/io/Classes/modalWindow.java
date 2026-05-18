@@ -2,6 +2,7 @@ package mryazik.github.io.Classes;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -23,6 +24,7 @@ public class modalWindow {
             FXMLLoader loader = new FXMLLoader(App.class.getResource("/mryazik/github/io/fxml/" + fxml_name));
             Scene scene = new Scene(loader.load());
             newModalWindow.setScene(scene);
+            scene.setFill(Color.TRANSPARENT);
 
             newModalWindow.show();
 
