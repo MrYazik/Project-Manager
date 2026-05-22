@@ -6,14 +6,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.effect.ColorAdjust?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="0.0" minWidth="-Infinity" prefHeight="409.0" prefWidth="234.0" styleClass="left-menu-main" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mryazik.github.io.Controllers.leftMenu">
@@ -76,104 +74,7 @@
             </Label>
             <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" prefWidth="228.0" styleClass="left-my-project-scrollpane" VBox.vgrow="ALWAYS">
                <content>
-                  <VBox maxHeight="1.7976931348623157E308" minHeight="0.0" prefWidth="228.0" styleClass="left-my-project-menu">
-                     <children>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="13.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="227.0" styleClass="left-select-project-button" text="Имя проекта">
-                           <graphic>
-                              <Circle fill="#8b5cf6" radius="5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
-                                 <effect>
-                                    <DropShadow height="16.95" radius="8.5275" spread="0.2" width="19.16">
-                                       <color>
-                                          <Color red="0.6139619946479797" green="0.4597953259944916" blue="0.9736841917037964" />
-                                       </color>
-                                    </DropShadow>
-                                 </effect>
-                              </Circle>
-                           </graphic>
-                           <padding>
-                              <Insets left="15.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="13.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="227.0" styleClass="left-select-project-button" text="Имя проекта">
-                           <graphic>
-                              <Circle fill="#8b5cf6" radius="5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
-                                 <effect>
-                                    <DropShadow height="16.95" radius="8.5275" spread="0.2" width="19.16">
-                                       <color>
-                                          <Color red="0.6139619946479797" green="0.4597953259944916" blue="0.9736841917037964" />
-                                       </color>
-                                    </DropShadow>
-                                 </effect>
-                              </Circle>
-                           </graphic>
-                           <padding>
-                              <Insets left="15.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="13.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="227.0" styleClass="left-select-project-button" text="Имя проекта">
-                           <graphic>
-                              <Circle fill="#8b5cf6" radius="5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
-                                 <effect>
-                                    <DropShadow height="16.95" radius="8.5275" spread="0.2" width="19.16">
-                                       <color>
-                                          <Color red="0.6139619946479797" green="0.4597953259944916" blue="0.9736841917037964" />
-                                       </color>
-                                    </DropShadow>
-                                 </effect>
-                              </Circle>
-                           </graphic>
-                           <padding>
-                              <Insets left="15.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="13.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="227.0" styleClass="left-select-project-button" text="Имя проекта">
-                           <graphic>
-                              <Circle fill="#8b5cf6" radius="5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
-                                 <effect>
-                                    <DropShadow height="16.95" radius="8.5275" spread="0.2" width="19.16">
-                                       <color>
-                                          <Color red="0.6139619946479797" green="0.4597953259944916" blue="0.9736841917037964" />
-                                       </color>
-                                    </DropShadow>
-                                 </effect>
-                              </Circle>
-                           </graphic>
-                           <padding>
-                              <Insets left="15.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="13.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="227.0" styleClass="left-select-project-button" text="Имя проекта">
-                           <graphic>
-                              <Circle fill="#8b5cf6" radius="5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
-                                 <effect>
-                                    <DropShadow height="16.95" radius="8.5275" spread="0.2" width="19.16">
-                                       <color>
-                                          <Color red="0.6139619946479797" green="0.4597953259944916" blue="0.9736841917037964" />
-                                       </color>
-                                    </DropShadow>
-                                 </effect>
-                              </Circle>
-                           </graphic>
-                           <padding>
-                              <Insets left="15.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </Button>
-                     </children>
+                  <VBox fx:id="list_projects" maxHeight="1.7976931348623157E308" minHeight="0.0" prefWidth="228.0" styleClass="left-my-project-menu">
                      <padding>
                         <Insets left="10.0" right="10.0" />
                      </padding>

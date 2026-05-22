@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 
 import javafx.stage.StageStyle;
 import mryazik.github.io.Classes.layoutLoad;
+import mryazik.github.io.Controllers.leftMenu;
 
 
 import java.util.logging.Level;
@@ -45,7 +46,11 @@ public class App extends Application {
             primaryStage.setScene(scene);
 
             // загружаем главный VBox
-            layoutLoad.loadVBoxInLeft("left-control-list.fxml");
+            FXMLLoader leftMenuLoader = layoutLoad.loadVBoxInLeft("left-control-list.fxml"); // левое меню
+            leftMenu controller = leftMenuLoader.getController();
+
+            controller.init(); // Загружаем список всех проектов
+
             layoutLoad.loadVBoxInCenter("standart_menu.fxml");
 
             primaryStage.show();

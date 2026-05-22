@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,7 +17,7 @@ public class FilesWork {
     static Logger logger = Logger.getLogger(FilesWork.class.getName());
     static Path pathToProject;
 
-    public static void createSystemDir()
+    public static Path createSystemDir()
     {
         try {
             File folder = new File(getSystemAppPath.get().toUri());
@@ -24,11 +25,14 @@ public class FilesWork {
 
             if (!folder.exists()) { // Если папки нет
                 Files.createDirectory(pathToProject);
+                return pathToProject;
             } else {
                 logger.log(Level.INFO, "Файл программы уже существует");
+                return pathToProject;
             }
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Не удалось создать системную папку", e);
+            return null;
         }
     }
 
@@ -94,13 +98,50 @@ public class FilesWork {
     2. Добавить под низ textField текст, если произошла ошибка (например, файл уже существует)
      */
 
+    public static ArrayList<String> getListNameProjects()
+    {
+        File fileProject = createSystemDir().toFile(); // Получаем путь до папки где все проекты
+        File[] files = fileProject.getAbsoluteFile().listFiles();
+
+        try {
+            String listProjects = ""; // Для лога
+
+            // Создаём новое хранилище названий проектов
+            ArrayList<String> names = new ArrayList<String>();
+
+            int i = 1;
+
+            for (File file : files)
+            {
+
+                if (file.getName().contains("."))
+                {
+                    listProjects += i + ". " + file.getName() + " (Системный файл)" + '\n';
+                } else
+                {
+                    listProjects += i + ". " + file.getName() +  '\n';
+                    names.add(file.getName());
+                }
+
+                i++;
+            }
+
+            logger.log(Level.INFO, "Список проектов:\n" + listProjects);
+            return names;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void main(String args[])
     {
-        createSystemDir();
+//        createSystemDir();
+//
+//        Path project = createProject("penis228");
+//        changeReadme("""
+//                Измените этот README, добавьте информации о проекта
+//                test228""", project);
 
-        Path project = createProject("penis228");
-        changeReadme("""
-                Измените этот README, добавьте информации о проекта
-                test228""", project);
+        getListNameProjects();
     }
 }
