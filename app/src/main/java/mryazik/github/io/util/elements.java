@@ -1,7 +1,6 @@
 package mryazik.github.io.util;
 
 
-import com.sun.javafx.logging.PlatformLogger;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

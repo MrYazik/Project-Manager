@@ -4,6 +4,7 @@
 package mryazik.github.io;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,36 +15,51 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.StageStyle;
 import mryazik.github.io.Classes.layoutLoad;
 import mryazik.github.io.Controllers.leftMenu;
+import mryazik.github.io.util.getOSName;
 
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class App extends Application {
+    // Константы
+    public static final String appName = "Project Manager";
+
     public static Stage primaryStage;
     public static BorderPane rootLayout;
 
     public static Logger logger = Logger.getLogger(App.class.getName());
 
     public static void main(String[] args) {
-        Application.launch();
+        if (getOSName.get().contains("mac")) {
+            // Именно это свойство в Java 21 отвечает за имя в Menu Bar и Dock
+            System.setProperty("apple.awt.application.name", "Project Manager");
+            System.setProperty("glass.accessible.force", "false");
+        }
+
+        Application.launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         App.primaryStage = primaryStage;
+// В методе start(Stage stage):
 
         showMainWindow();
+        primaryStage.show();
+
     }
 
     private void showMainWindow()
     {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/BorderPane.fxml"));
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("/mryazik/github/io/fxml/BorderPane.fxml"));
             rootLayout = loader.load();
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
+            primaryStage.setTitle(appName);
 
             // загружаем главный VBox
             FXMLLoader leftMenuLoader = layoutLoad.loadVBoxInLeft("left-control-list.fxml"); // левое меню
@@ -52,11 +68,10 @@ public class App extends Application {
             controller.init(); // Загружаем список всех проектов
 
             layoutLoad.loadVBoxInCenter("standart_menu.fxml");
-
-            primaryStage.show();
         } catch (Exception e)
         {
             logger.log(Level.WARNING, "Не удалось загрузить BorderPane", e);
+            e.printStackTrace();
         }
     }
 }

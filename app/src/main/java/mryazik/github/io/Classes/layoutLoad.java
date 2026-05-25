@@ -11,7 +11,7 @@ public class layoutLoad {
     public static FXMLLoader loadVBoxInCenter(String name_vbox_file)
     {
         try {
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/" + name_vbox_file));
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("/mryazik/github/io/fxml/" + name_vbox_file));
             VBox rootLayout = loader.load();
 
             App.rootLayout.setCenter(rootLayout);
@@ -25,13 +25,14 @@ public class layoutLoad {
     public static FXMLLoader loadVBoxInLeft(String name_vbox_file)
     {
         try {
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/" + name_vbox_file));
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("/mryazik/github/io/fxml/" + name_vbox_file));
             VBox rootLayout = loader.load();
 
             App.rootLayout.setLeft(rootLayout);
             return loader; // для получения контроллера
         } catch (Exception e) {
             App.logger.log(Level.WARNING, "Не удалось загрузить слой: " + name_vbox_file);
+            e.printStackTrace();
             return null;
         }
     }

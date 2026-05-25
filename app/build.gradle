@@ -7,8 +7,10 @@
 
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
+    id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'org.beryx.jlink' version '3.0.1' // Плагин для работы с jpackage
 }
 
 repositories {
@@ -21,6 +23,8 @@ dependencies {
     testImplementation libs.junit.jupiter
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // Подключаем Guava, как в проблемном проекте
+    implementation 'com.google.guava:guava:33.3.1-jre'
 
     // This dependency is used by the application.
     implementation libs.guava
@@ -34,16 +38,40 @@ java {
 }
 
 javafx {
-    version="21"
-    modules = ["javafx.controls", "javafx.fxml"]
+    version="21.0.11"
+    modules = ["javafx.controls", "javafx.fxml", 'javafx.graphics']
 }
 
 application {
     // Если модуль называется mryazik.github.io, а класс App в этом же пакете:
     mainClass = 'mryazik.github.io.App'
+//    mainModule = 'Project-Manager.app.main'
+    mainModule='mryazik.github.io'
 }
 
-run {
-    // Настраиваем classpath сразу на этапе конфигурации
-    classpath = sourceSets.main.runtimeClasspath
+
+jlink {
+    imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+    launcher {
+        name = 'Project Manger' // Имя исполняемого файла
+    }
+
+    // Настройка установщика dmg
+    jpackage {
+        imageOptions = [
+                '--icon', 'src/main/resources/icon.icns', // Иконка
+                // Флаги оптимизации JVM переносятся сюда:
+                '--java-options', '-Djavafx.autoproxy.disable=true',
+                '--java-options', '-XX:+TieredCompilation',
+                '--java-options', '-XX:TieredStopAtLevel=1'
+        ]
+
+        installerOptions = [
+                '--mac-package-identifier', 'mryazik.github.io',
+//      '--mac-sign', // Если у вас есть сертификат Apple
+                '--mac-signing-keychain', 'login.keychain',
+                '--mac-package-name', 'ProjectManager'
+        ]
+    }
 }
