@@ -18,6 +18,7 @@ public class layoutLoad {
             return loader; // для получения контроллера
         } catch (Exception e) {
             App.logger.log(Level.WARNING, "Не удалось загрузить слой: " + name_vbox_file);
+            e.printStackTrace();
             return null;
         }
     }

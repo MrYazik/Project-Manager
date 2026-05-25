@@ -93,3 +93,63 @@
     -fx-background-color: transparent;
 }
 
+.in_project-main {
+    -fx-border-radius: 19;
+    -fx-background-radius: 19;
+    -fx-border-color: #30363d;
+    -fx-border-width: 3;
+    -fx-background-color: #181a1c;
+}
+
+.in_project-icon_button {
+
+}
+
+.in_project-files-menu {
+    -fx-background-color: #161b22;
+    -fx-border-color: #30363d;
+}
+
+.in_project-notes-menu {
+    -fx-background-color: #1c2128;
+    -fx-border-color: #30363d;
+}
+.in_project-notes-text-area {
+    -fx-control-inner-background: transparent;
+    -fx-border-color: transparent;
+}
+
+/* Базовое состояние (когда фокуса нет) */
+.text-area {
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+}
+
+/* Состояние, когда кликнули по полю (активно / выделено) */
+.text-area:focused {
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-focused-blend-mode: transparent; /* Убирает синее свечение */
+}
+
+/* Внутренние компоненты (всегда прозрачные) */
+.text-area .scroll-pane,
+.text-area .scroll-pane .viewport,
+.text-area .scroll-pane .content {
+    -fx-background-color: transparent;
+}
+
+/* Делаем мигающий курсор ввода тоже белым, чтобы его было видно */
+.text-area .text {
+    -fx-text-origin: base;
+    -fx-fill: white;
+}
+
+.in_project-files-menu-button {
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-border-color: #8b5cf6;
+    -fx-border-width: 1.4;
+    -fx-background-color: #231f32;
+    -fx-text-fill: #c8d1d9;
+}

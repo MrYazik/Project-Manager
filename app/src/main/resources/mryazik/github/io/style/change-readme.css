@@ -1,0 +1,39 @@
+/* Внутренние компоненты (всегда прозрачные) */
+.text-area .scroll-pane,
+.text-area .scroll-pane .viewport,
+.text-area .scroll-pane .content {
+    -fx-background-color: transparent;
+}
+
+/* Делаем мигающий курсор ввода тоже белым, чтобы его было видно */
+.text-area .text {
+    -fx-text-origin: base;
+    -fx-fill: white;
+}
+
+.text-area {
+    -fx-background-color: transparent;
+    -fx-text-fill: WHITE;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-border-width: 2;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+}
+
+.text-area:focused {
+    -fx-border-color: #8b5cf6;
+
+}
+
+.back {
+    -fx-background-color: transparent;
+    -fx-text-fill: #89949f;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.back:hover {
+    -fx-background-color: #22272d;
+    -fx-text-fill: WHITE;
+}

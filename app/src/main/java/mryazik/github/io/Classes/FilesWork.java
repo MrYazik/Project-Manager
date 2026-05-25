@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -86,13 +88,30 @@ public class FilesWork {
         }
     }
 
+
+    public static String getReadme(String name_project)
+    {
+        try {
+            File file = new File(createSystemDir().toString() + '/' + name_project + "/README.md");
+
+            if (file.exists())
+            {
+                return Files.readString(file.toPath());
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Не удалось получить README проекта" + name_project);
+        }
+
+        return null;
+    }
+
     /*
     1. Добавить динамические добавление проектов в левое меню
 
     Добавить функции:
-        1. Получение списка проектов в виде массива имён
+        1. Получение списка проектов в виде массива имён -
         2. Удаление проектов
-        3. Получение README.md
+        3. Получение README.md -
         4. Получение файлов идей, в виде Map: (name_file, содержание: (основной текст, список задач)
 
     2. Добавить под низ textField текст, если произошла ошибка (например, файл уже существует)
@@ -132,6 +151,38 @@ public class FilesWork {
             throw new RuntimeException(e);
         }
     }
+
+//    public static ArrayList<Map<String, Object>> getProjectIdeas(String name_project)
+//    {
+//        File project_ideas = new File(createProject(name_project).toString() + "/ideas");
+//        ArrayList<Map<String, Object>> listFiles = new ArrayList<>();
+//
+//        if (project_ideas.exists())
+//        {
+//            File[] list_files_in_dir = project_ideas.listFiles();
+//
+//            for (File file : list_files_in_dir)
+//            {
+//                try {
+//                    Map<String, Object> map = new HashMap<>();
+//                    map.put(file.getName(), Files.readString(Paths.get(file.getPath())));
+//
+//                    listFiles.add(map);
+//                } catch (Exception e)
+//                {
+//                    logger.log(Level.SEVERE, "Не удалось получить содержимое файла: " + file.getName(), e);
+//                }
+//            }
+//        } else {
+//            try {
+//                Files.createDirectory(Paths.get(project_ideas.getPath()));
+//                getProjectIdeas(name_project);
+//            } catch (Exception e)
+//            {
+//                logger.log(Level.SEVERE, "Не удалось получить папку: " + project_ideas,e);
+//            }
+//        }
+//    }
 
     public static void main(String args[])
     {

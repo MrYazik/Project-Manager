@@ -1,6 +1,8 @@
 package mryazik.github.io.util;
 
 
+import com.sun.javafx.logging.PlatformLogger;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
@@ -9,8 +11,15 @@ import javafx.scene.shape.Circle;
 import javafx.scene.layout.VBox;
 
 import javafx.geometry.Insets;
+import mryazik.github.io.Classes.layoutLoad;
+import mryazik.github.io.Controllers.inProject;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class elements {
+    static Logger logger = Logger.getLogger(elements.class.getName());
+
     public static Button projectInLeftMenu(String projectName)
     {
         Button button = new Button(projectName);
@@ -43,6 +52,17 @@ public class elements {
 
         // Внешний отступ снизу (VBox.margin)
         VBox.setMargin(button, new Insets(0, 0, 10, 0));
+
+        button.setOnAction(event -> {
+            try {
+                FXMLLoader loader = layoutLoad.loadVBoxInCenter("in-project.fxml");
+
+                inProject controller = loader.getController();
+                controller.init(projectName);
+            } catch (Exception e) {
+                logger.log(Level.SEVERE, "Не удалось загрузить in-project", e);
+            }
+        });
 
         return button;
     }
