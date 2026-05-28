@@ -2,14 +2,20 @@ package mryazik.github.io.util;
 
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.layout.VBox;
 
 import javafx.geometry.Insets;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import mryazik.github.io.Classes.layoutLoad;
 import mryazik.github.io.Controllers.inProject;
 
@@ -62,6 +68,48 @@ public class elements {
                 logger.log(Level.SEVERE, "Не удалось загрузить in-project", e);
             }
         });
+
+        return button;
+    }
+
+    public static Button notesButton(String text, Runnable onClickAction) {
+        Button button = new Button();
+
+        // 1. Свойства самой кнопки
+        button.setText(text);
+        button.setAlignment(Pos.TOP_LEFT);
+        button.setGraphicTextGap(8.0);
+        button.setMnemonicParsing(false);
+        button.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+        button.setPrefWidth(230.0);
+        button.setPrefHeight(23.0);
+
+        // Подключение твоего CSS-класса
+        button.getStyleClass().add("in_project-files-menu-button");
+
+        // 2. Настройка <VBox.margin>
+        VBox.setMargin(button, new Insets(0, 0, 7.0, 0)); // bottom="7.0"
+
+        // 3. Создание и жесткая вставка одинаковой графики <graphic><ImageView>
+        try {
+            // Иконка берется из ресурсов твоего проекта
+            Image image = new Image(elements.class.getResourceAsStream("/mryazik/github/io/icons/note.png"));
+            ImageView imageView = new ImageView(image);
+
+            imageView.setFitHeight(19.0);
+            imageView.setFitWidth(12.0);
+            imageView.setPickOnBounds(true);
+            imageView.setPreserveRatio(true);
+
+            button.setGraphic(imageView);
+        } catch (Exception e) {
+            System.err.println("Не удалось загрузить стандартную иконку /icons/note.png");
+        }
+
+        // 4. Установка курсора <Cursor fx:constant="HAND" />
+        button.setCursor(Cursor.HAND);
+
+        button.setOnAction(event ->  onClickAction.run());
 
         return button;
     }

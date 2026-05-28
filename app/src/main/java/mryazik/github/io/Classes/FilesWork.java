@@ -19,7 +19,7 @@ public class FilesWork {
     static Logger logger = Logger.getLogger(FilesWork.class.getName());
     static Path pathToProject;
 
-    public static Path createSystemDir()
+    public static Path createSystemDir() // Может возвращать путь до системной папки
     {
         try {
             File folder = new File(getSystemAppPath.get().toUri());
@@ -38,7 +38,7 @@ public class FilesWork {
         }
     }
 
-    public static Path createProject(String name_project)
+    public static Path createProject(String name_project) // Может возвращать путь до проекта, если проект существует
     {
         createSystemDir(); // если уже есть, то не создаёт
 
@@ -65,7 +65,7 @@ public class FilesWork {
         }
     }
 
-    public static void changeReadme(String readme, Path pathToProject)
+    public static void changeReadme(String readme, Path pathToProject) // Может создавать Readme, если его нет
     {
         try {
             Path readmePath = Paths.get(pathToProject.toString() + "/README.md");
@@ -152,37 +152,64 @@ public class FilesWork {
         }
     }
 
-//    public static ArrayList<Map<String, Object>> getProjectIdeas(String name_project)
-//    {
-//        File project_ideas = new File(createProject(name_project).toString() + "/ideas");
-//        ArrayList<Map<String, Object>> listFiles = new ArrayList<>();
-//
-//        if (project_ideas.exists())
-//        {
-//            File[] list_files_in_dir = project_ideas.listFiles();
-//
-//            for (File file : list_files_in_dir)
-//            {
-//                try {
-//                    Map<String, Object> map = new HashMap<>();
-//                    map.put(file.getName(), Files.readString(Paths.get(file.getPath())));
-//
-//                    listFiles.add(map);
-//                } catch (Exception e)
-//                {
-//                    logger.log(Level.SEVERE, "Не удалось получить содержимое файла: " + file.getName(), e);
-//                }
-//            }
-//        } else {
-//            try {
-//                Files.createDirectory(Paths.get(project_ideas.getPath()));
-//                getProjectIdeas(name_project);
-//            } catch (Exception e)
-//            {
-//                logger.log(Level.SEVERE, "Не удалось получить папку: " + project_ideas,e);
-//            }
-//        }
-//    }
+    public static ArrayList<Map<String, Object>> getProjectIdeas(String name_project)
+    {
+        File project_ideas = new File(createProject(name_project).toString() + "/ideas");
+        ArrayList<Map<String, Object>> listFiles = new ArrayList<>();
+
+        if (project_ideas.exists())
+        {
+            File[] list_files_in_dir = project_ideas.listFiles();
+
+            for (File file : list_files_in_dir)
+            {
+                try {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put(file.getName(), Files.readString(Paths.get(file.getPath())));
+
+                    listFiles.add(map);
+                } catch (Exception e)
+                {
+                    logger.log(Level.SEVERE, "Не удалось получить содержимое файла: " + file.getName(), e);
+                }
+            }
+        } else {
+            try {
+                Files.createDirectory(Paths.get(project_ideas.getPath()));
+                getProjectIdeas(name_project);
+            } catch (Exception e)
+            {
+                logger.log(Level.SEVERE, "Не удалось получить папку: " + project_ideas,e);
+            }
+        }
+
+        return listFiles;
+    }
+
+    // Создание идеи. Получаем путь до заметки
+    public static Path createIdea(String name_project, String name_note, String note_string)
+    {
+        // Идеи будем хранить в формате .task, всё равно потом будем их расшифровывать
+
+        File file = new File(createProject(name_project).toString() + "/ideas");
+        Path pathToNote = Paths.get(file.toPath().toString() + "/" + name_note + ".task");
+
+        try {
+            if (file.exists()) {
+                Files.createFile(pathToNote);
+                Files.writeString(pathToNote, note_string);
+                return pathToNote;
+            } else {
+                Files.createDirectory(file.toPath());
+                createIdea(name_project, name_note, note_string); // Повторно вызываем с созданной папкой
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Не удалось создать заметку", e);
+            return null;
+        }
+
+        return null;
+    }
 
     public static void main(String args[])
     {

@@ -1,3 +1,7 @@
+VBox {
+    -fx-background-color: #181a1c;
+}
+
 .all_project {
     -fx-background-color: #37373f;
     -fx-border-radius: 5;
@@ -98,7 +102,6 @@
     -fx-background-radius: 19;
     -fx-border-color: #30363d;
     -fx-border-width: 3;
-    -fx-background-color: #181a1c;
 }
 
 .in_project-icon_button {
@@ -113,6 +116,8 @@
 .in_project-notes-menu {
     -fx-background-color: #1c2128;
     -fx-border-color: #30363d;
+    -fx-border-radius: 0 0 0 19;
+    -fx-background-radius: 0 0 0 19;
 }
 .in_project-notes-text-area {
     -fx-control-inner-background: transparent;
@@ -151,5 +156,44 @@
     -fx-border-color: #8b5cf6;
     -fx-border-width: 1.4;
     -fx-background-color: #231f32;
+    -fx-text-fill: #c8d1d9;
+}
+
+/* ImageView, который находится внутри элемента с данным классом будет окрашиваться в жёлтый цвет */
+
+.in_project-files-menu-button > ImageView {
+                                   -fx-effect: innershadow(three-pass-box, #f59e0c, 100, 1, 0, 0);
+                               }
+
+.in_project-inactive-files-menu-button {
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-border-color: transparent;
+    -fx-border-width: 1.4;
+    -fx-background-color: transparent;
+    -fx-text-fill: #88919b;
+}
+.in_project-inactive-files-menu-button:hover {
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-border-color: transparent;
+    -fx-border-width: 1.4;
+    -fx-background-color: #26262e;
+    -fx-text-fill: #c8d1d9;
+}
+
+/* ImageView, который находится внутри элемента с данным классом будет окрашиваться в жёлтый цвет */
+
+.in_project-inactive-files-menu-button > ImageView {
+                                   -fx-effect: innershadow(three-pass-box, #484f58, 100, 1, 0, 0);
+                               }
+
+
+.create-notes-menu {
+    -fx-border-radius: 19;
+    -fx-background-radius: 19;
+    -fx-border-color: #30363d;
+    -fx-border-width: 3;
+
     -fx-text-fill: #c8d1d9;
 }
