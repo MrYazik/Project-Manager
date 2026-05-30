@@ -1,13 +1,14 @@
 package mryazik.github.io.Controllers;
 
+import javafx.beans.value.ChangeListener;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.NodeOrientation;
-import javafx.geometry.Pos;
+import javafx.fxml.LoadListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import mryazik.github.io.App;
 import mryazik.github.io.Classes.FilesWork;
@@ -16,6 +17,7 @@ import mryazik.github.io.util.elements;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class inProject {
     @FXML
@@ -30,6 +32,8 @@ public class inProject {
     VBox list_notes;
     @FXML
     TextArea notes_at_notes;
+    @FXML
+    VBox notes_at_idea_vbox;
 
     public void initialize()
     {
@@ -47,6 +51,8 @@ public class inProject {
             controller.init(loader, name_project.getText());
         });
     }
+
+    AtomicBoolean is_text_apply_on = new AtomicBoolean(false);
 
     public void init(String name_project)
     {
@@ -70,7 +76,22 @@ public class inProject {
                         if(toButton.getText() != key) {
                             toButton.getStyleClass().add("in_project-inactive-files-menu-button");
                         } else {
+                            HBox apply_menu = elements.createUnsavedChangesMenu();
+                            ChangeListener listenner = (observable, oldValue, newValue) -> {
+                                if (!oldValue.equals(newValue) && !is_text_apply_on.get()) {
+                                    notes_at_idea_vbox.getChildren().add(apply_menu);
+                                    is_text_apply_on.set(true);
+                                }
+                            };
+
+                            // Перед каждым переключением убираем меню подтверждения
+                            notes_at_notes.textProperty().removeListener(listenner);
+                            notes_at_idea_vbox.getChildren().remove(apply_menu);
+
+
                             toButton.getStyleClass().add("in_project-files-menu-button");
+
+                            notes_at_notes.textProperty().addListener(listenner);
                         }
                     });
                 }));

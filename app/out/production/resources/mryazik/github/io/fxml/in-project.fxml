@@ -19,7 +19,7 @@
    <children>
       <HBox minHeight="50.0" minWidth="100.0" prefHeight="51.0" prefWidth="610.0" styleClass="left-menu-header">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label text="Project: " textFill="#c8d1d9">
                      <font>
@@ -32,9 +32,6 @@
                      </font>
                   </Label>
                </children>
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
             </HBox>
          </children>
       </HBox>

@@ -10,8 +10,11 @@ import mryazik.github.io.App;
 import mryazik.github.io.Classes.FilesWork;
 import mryazik.github.io.Classes.modalWindow;
 import mryazik.github.io.util.elements;
+import mryazik.github.io.workData.Projects;
+import mryazik.github.io.workData.workJsonFile;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class leftMenu {
     @FXML
@@ -32,11 +35,11 @@ public class leftMenu {
 
     public void init()
     {
-        ArrayList<String> listProject = FilesWork.getListNameProjects();
+        List<Projects> listProject = workJsonFile.jsonObject.getProjects();
 
-        for (String name : listProject)
+        for (Projects project : listProject)
         {
-            list_projects.getChildren().add(elements.projectInLeftMenu(name));
+            list_projects.getChildren().add(elements.projectInLeftMenu(project.getTitle()));
         }
     }
 }
