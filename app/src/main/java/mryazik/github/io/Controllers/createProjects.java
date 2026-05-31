@@ -1,11 +1,13 @@
 package mryazik.github.io.Controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import mryazik.github.io.App;
 import mryazik.github.io.Classes.FilesWork;
+import mryazik.github.io.Classes.layoutLoad;
 import mryazik.github.io.Classes.modalWindow;
 import mryazik.github.io.workData.Projects;
 import mryazik.github.io.workData.jsonData;
@@ -53,6 +55,11 @@ public class createProjects {
 
                 projectInfo.addProjects(listProjects);
                 workJsonFile.changeJson(projectInfo);
+
+                // Подгружаем изменения в интерфейс
+                FXMLLoader leftMenuLoader = layoutLoad.loadVBoxInLeft("left-control-list.fxml"); // левое меню
+                leftMenu controller = leftMenuLoader.getController();
+                controller.init(); // Загружаем список всех проектов
 
                 currentModalStage.close();
             }

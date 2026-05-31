@@ -35,7 +35,9 @@ public class leftMenu {
 
     public void init()
     {
-        List<Projects> listProject = workJsonFile.jsonObject.getProjects();
+        // Очищаем лист
+        list_projects.getChildren().clear();
+        List<Projects> listProject = workJsonFile.getJsonInfo().getProjects();
 
         for (Projects project : listProject)
         {

@@ -67,7 +67,7 @@ public class App extends Application {
 
             controller.init(); // Загружаем список всех проектов
 
-            layoutLoad.loadVBoxInCenter("standart_menu.fxml");
+//            layoutLoad.loadVBoxInCenter("standart_menu.fxml");
         } catch (Exception e)
         {
             logger.log(Level.WARNING, "Не удалось загрузить BorderPane", e);
