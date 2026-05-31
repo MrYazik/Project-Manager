@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -38,6 +39,20 @@ public class Projects {
     {
         return this.readme;
     }
+    public void changeReadme(String readme) {this.readme = readme;}
     @JsonIgnore
     public String getTitle() {return  this.title;}
+
+    public boolean isProjectContainsThisNote(int id)
+    {
+        AtomicBoolean status = new AtomicBoolean(false);
+
+        ideas_id.forEach((id_) -> {
+            if (id == id_) {
+                status.set(true);
+            }
+        });
+
+        return status.get();
+    }
 }

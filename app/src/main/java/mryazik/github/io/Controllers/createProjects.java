@@ -4,8 +4,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import mryazik.github.io.App;
 import mryazik.github.io.Classes.FilesWork;
 import mryazik.github.io.Classes.modalWindow;
+import mryazik.github.io.workData.Projects;
+import mryazik.github.io.workData.jsonData;
+import mryazik.github.io.workData.workJsonFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class createProjects {
     @FXML Button done;
@@ -28,7 +35,25 @@ public class createProjects {
             {
                 // Добавить ошибку - что файл пустой
             } else {
-                FilesWork.createProject(textFromTextField);
+                jsonData projectInfo = workJsonFile.getJsonInfo();
+
+                // Создаём сам объект проекта
+                Projects newProjectObject = new Projects(
+                        projectInfo.getCountProjects(),
+                        textFromTextField,
+                        """
+                                    Сюда вы можете добавить информацию о проекте
+                                    
+                                    Можно воспользоваться данным шаблоном:
+                                """
+                        );
+
+                List<Projects> listProjects = new ArrayList<>();
+                listProjects.add(newProjectObject);
+
+                projectInfo.addProjects(listProjects);
+                workJsonFile.changeJson(projectInfo);
+
                 currentModalStage.close();
             }
 

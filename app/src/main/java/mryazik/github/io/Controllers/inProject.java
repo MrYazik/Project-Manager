@@ -1,9 +1,7 @@
 package mryazik.github.io.Controllers;
 
 import javafx.beans.value.ChangeListener;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
-import javafx.fxml.LoadListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -11,13 +9,16 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import mryazik.github.io.App;
-import mryazik.github.io.Classes.FilesWork;
 import mryazik.github.io.Classes.modalWindow;
 import mryazik.github.io.util.elements;
+import mryazik.github.io.workData.Ideas;
+import mryazik.github.io.workData.Projects;
+import mryazik.github.io.workData.jsonData;
+import mryazik.github.io.workData.workJsonFile;
 
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class inProject {
     @FXML
@@ -58,22 +59,33 @@ public class inProject {
     {
         // Инициализируем называние
         this.name_project.setText(name_project);
-        this.readme_output.setText(FilesWork.getReadme(name_project));
 
-        // Подгружаем кнопки
-        ArrayList<Map<String, Object>> notes = FilesWork.getProjectIdeas(name_project);
+        // Получаем объект проекта и получаем от туда README.md
+        jsonData jsonObject = workJsonFile.getJsonInfo();
+        AtomicReference<Projects> current_project = new AtomicReference<>();
 
-        for (Map<String, Object> map : notes)
-        {
-            map.forEach((String key, Object object) -> {
-                list_notes.getChildren().add(elements.notesButton(key, () -> {
-                    notes_at_notes.setText(object.toString());
+        jsonObject.getProjects().forEach((project) -> {
+            if (project.getTitle().equals(name_project)) {
+                current_project.set(project);
+                this.readme_output.setText(project.getReadme());
+            }
+        });
 
+
+        // Получаем список идей
+        List<Ideas> ideas = jsonObject.getIdeas();
+
+        ideas.forEach((idea) -> {
+            if (current_project.get().isProjectContainsThisNote(idea.getId())) {
+                list_notes.getChildren().add(elements.notesButton(idea.getTitle(), () -> {
+                    notes_at_notes.setText(idea.getNote());
+
+                    // Перебираем кнопки и ставим активный класс только у нажатого элемента
                     list_notes.getChildren().forEach((Object button) -> {
                         Button toButton = (Button) button;
                         toButton.getStyleClass().removeAll("in_project-inactive-files-menu-button", "in_project-files-menu-button");
 
-                        if(toButton.getText() != key) {
+                        if (!toButton.getText().equals(idea.getTitle())) {
                             toButton.getStyleClass().add("in_project-inactive-files-menu-button");
                         } else {
                             HBox apply_menu = elements.createUnsavedChangesMenu();
@@ -95,7 +107,7 @@ public class inProject {
                         }
                     });
                 }));
-            });
-        }
+            }
+        });
     }
 }
