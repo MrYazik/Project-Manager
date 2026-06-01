@@ -15,7 +15,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="300.0" minWidth="200.0" prefHeight="578.0" prefWidth="686.0" styleClass="in_project-main" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mryazik.github.io.Controllers.inProject">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="300.0" minWidth="200.0" prefHeight="674.0" prefWidth="929.0" styleClass="in_project-main" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mryazik.github.io.Controllers.inProject">
    <children>
       <HBox minHeight="50.0" minWidth="100.0" prefHeight="51.0" prefWidth="610.0" styleClass="left-menu-header">
          <children>
@@ -84,7 +84,7 @@
       </VBox>
       <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1000.0" prefWidth="200.0" style="-fx-background-radius: 0 0 15 15; -fx-border-radius: 0 0 15 15;">
          <children>
-            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="300.0" prefWidth="392.0" style="-fx-background-radius: 0 0 15 15;">
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="300.0" prefWidth="323.0" style="-fx-background-radius: 0 0 15 15;">
                <children>
                   <VBox maxHeight="1.7976931348623157E308" prefHeight="168.0" prefWidth="255.0" style="-fx-background-radius: 0 0 15 15;" styleClass="in_project-files-menu">
                      <children>
@@ -120,7 +120,7 @@
                               </Button>
                            </children>
                         </HBox>
-                        <ScrollPane hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="137.0" prefWidth="233.0" style="-fx-background-color: transparent;">
+                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="137.0" prefWidth="233.0" style="-fx-background-color: transparent;">
                            <content>
                               <VBox fx:id="list_notes" prefHeight="84.0" prefWidth="230.0" />
                            </content>

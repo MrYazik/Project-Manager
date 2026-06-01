@@ -197,3 +197,47 @@ VBox {
 
     -fx-text-fill: #c8d1d9;
 }
+
+/* Scrollbar */
+
+/* Основной цвет скроллбара */
+.scroll-bar {
+    -fx-background-color: transparent;
+    -fx-padding: 2px;
+}
+
+/* Цвет дорожки (трека) */
+.scroll-bar > .track {
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 10em;
+}
+
+/* Бегунок (сам ползунок) */
+.scroll-bar > .thumb {
+    -fx-background-color: #c0c0c0;
+    -fx-background-radius: 10em;
+    -fx-border-radius: 10em;
+}
+
+/* Эффект при наведении на бегунок */
+.scroll-bar > .thumb:hover {
+    -fx-background-color: #8c8c8c;
+}
+
+/* Нажатие на бегунок */
+.scroll-bar > .thumb:pressed {
+    -fx-background-color: #595959;
+}
+
+/* Кнопки со стрелками (скрываем их для более чистого вида) */
+.scroll-bar > .decrement-button,
+.scroll-bar > .increment-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-bar > .decrement-button > .decrement-arrow,
+.scroll-bar > .increment-button > .increment-arrow {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}

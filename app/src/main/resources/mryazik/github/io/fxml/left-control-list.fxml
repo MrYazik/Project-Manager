@@ -86,7 +86,7 @@
             </ScrollPane>
          </children>
       </VBox>
-      <VBox alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" minHeight="0.0" VBox.vgrow="ALWAYS">
+      <VBox alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
          <VBox.margin>
             <Insets left="5.0" right="5.0" />
          </VBox.margin>

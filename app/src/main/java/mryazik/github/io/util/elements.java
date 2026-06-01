@@ -87,8 +87,10 @@ public class elements {
         button.setGraphicTextGap(8.0);
         button.setMnemonicParsing(false);
         button.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
-        button.setPrefWidth(230.0);
-        button.setPrefHeight(23.0);
+        button.setMinWidth(100.0);
+        button.setMinHeight(23.0);
+        button.setMaxWidth(Double.MAX_VALUE);
+        VBox.setVgrow(button, Priority.ALWAYS);
 
         // Подключение твоего CSS-класса
         button.getStyleClass().add("in_project-files-menu-button");
