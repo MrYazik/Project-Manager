@@ -18,11 +18,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.FontPosture;
 import javafx.scene.control.Label;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 
 import javafx.geometry.Insets;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import mryazik.github.io.App;
 import mryazik.github.io.Classes.layoutLoad;
+import mryazik.github.io.Classes.modalWindow;
+import mryazik.github.io.Controllers.createTask;
 import mryazik.github.io.Controllers.inProject;
 
 import java.util.logging.Level;
@@ -67,8 +73,11 @@ public class elements {
         button.setOnAction(event -> {
             try {
                 FXMLLoader loader = layoutLoad.loadVBoxInCenter("in-project.fxml");
-
                 inProject controller = loader.getController();
+
+                // Сбрасываем текущую идею
+                inProject.current_idea_id = -1;
+
                 controller.init(projectName);
             } catch (Exception e) {
                 logger.log(Level.SEVERE, "Не удалось загрузить in-project", e);
@@ -219,5 +228,145 @@ public class elements {
         hbox.getChildren().addAll(warningIcon, label, spacer, rollbackButton, changeButton);
 
         return hbox;
+    }
+
+    /**
+     * ФУНКЦИЯ 1: Создает независимую шапку группы.
+     * @param groupName Имя группы (автоматически переводится в UPPERCASE)
+     */
+    public static VBox createGroupHeader(String groupName, int group_id, String name_project) {
+        VBox all = new VBox();
+
+        HBox header = new HBox();
+        header.setAlignment(Pos.CENTER_LEFT);
+        header.setPrefHeight(32.0);
+        header.setPrefWidth(597.0);
+
+        // Название группы
+        Label groupLabel = new Label(groupName.toUpperCase());
+        groupLabel.setMinWidth(HBox.USE_PREF_SIZE);
+        groupLabel.setTextFill(Color.web("#8b949e"));
+        groupLabel.setFont(Font.font("System", FontWeight.BOLD, FontPosture.ITALIC, 12.0));
+
+        // Пружина-распорка для выталкивания меню вправо
+        Pane spacer = new Pane();
+        spacer.setPrefHeight(200.0);
+        spacer.setPrefWidth(100000.0);
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        // Кнопка-меню группы (три горизонтальные точки)
+        MenuButton groupMenuButton = new MenuButton("MenuButton");
+        groupMenuButton.setAlignment(Pos.CENTER);
+        groupMenuButton.setGraphicTextGap(0.0);
+        groupMenuButton.setMinHeight(HBox.USE_PREF_SIZE);
+        groupMenuButton.setMinWidth(HBox.USE_PREF_SIZE);
+        groupMenuButton.setMnemonicParsing(false);
+        groupMenuButton.setPrefHeight(15.0);
+        groupMenuButton.setPrefWidth(31.0);
+        groupMenuButton.setCursor(Cursor.HAND);
+        groupMenuButton.getStyleClass().add("three-dots-button");
+        groupMenuButton.setStyle("-fx-background-color: transparent;");
+
+        ImageView icon = createShadowIcon("/mryazik/github/io/icons/three_point_horizontal.png", 16.0, 16.0, Color.web("#8b949e"), 0.0);
+        groupMenuButton.setGraphic(icon);
+
+        // Пункты меню группы
+        MenuItem rename = new MenuItem("Переименовать группу", createShadowIcon("/mryazik/github/io/icons/edit.png", 16.0, 16.0, Color.web("#484f58"), 1.0));
+        MenuItem createTask = new MenuItem("Создать задачу", createShadowIcon("/mryazik/github/io/icons/add.png", 16.0, 16.0, Color.web("#484f58"), 1.0));
+        MenuItem completeAll = new MenuItem("Завершить всё", createShadowIcon("/mryazik/github/io/icons/array-left-up.png", 16.0, 16.0, Color.web("#484f58"), 1.0));
+        MenuItem delete = new MenuItem("Удалить раздел", createShadowIcon("/mryazik/github/io/icons/bin.png", 16.0, 16.0, Color.RED, 1.0));
+        delete.setStyle("-fx-text-fill: red;");
+
+        // Создаём задачу
+        createTask.setOnAction(event -> {
+            modalWindow.StageAndLoader loader = modalWindow.create(App.primaryStage, "create-task.fxml");
+            createTask controller = loader.loader().getController();
+            controller.init(loader, group_id, name_project);
+        });
+
+        groupMenuButton.getItems().addAll(rename, createTask, completeAll, delete);
+        header.getChildren().addAll(groupLabel, spacer, groupMenuButton);
+
+        all.getChildren().add(header);
+        return all;
+    }
+
+    /**
+     * ФУНКЦИЯ 2: Создает независимую строку задачи.
+     * @param taskText Текст задачи
+     */
+    public static HBox createTaskRow(String taskText) {
+        HBox taskRow = new HBox();
+        taskRow.setAlignment(Pos.CENTER_LEFT);
+        taskRow.setPrefHeight(44.0);
+        taskRow.setPrefWidth(597.0);
+        taskRow.getStyleClass().add("task");
+        taskRow.setPadding(new Insets(10.0, 10.0, 10.0, 10.0));
+
+        // Чекбокс задачи
+        CheckBox checkBox = new CheckBox(taskText);
+        checkBox.setGraphicTextGap(7.0);
+        checkBox.setMaxWidth(Double.MAX_VALUE);
+        checkBox.setMinWidth(HBox.USE_PREF_SIZE);
+        checkBox.setMnemonicParsing(false);
+        checkBox.setTextFill(Color.WHITE);
+        checkBox.setFont(Font.font("System", FontWeight.BOLD, FontPosture.ITALIC, 13.0));
+        HBox.setHgrow(checkBox, Priority.ALWAYS);
+
+        // Пружина-распорка
+        Pane spacer = new Pane();
+        spacer.setPrefHeight(200.0);
+        spacer.setPrefWidth(1000.0);
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        // Кнопка-меню задачи (три вертикальные точки)
+        MenuButton taskMenuButton = new MenuButton();
+        taskMenuButton.setAlignment(Pos.CENTER);
+        taskMenuButton.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
+        taskMenuButton.setGraphicTextGap(0.0);
+        taskMenuButton.setMaxHeight(HBox.USE_PREF_SIZE);
+        taskMenuButton.setMaxWidth(HBox.USE_PREF_SIZE);
+        taskMenuButton.setMinHeight(16.0);
+        taskMenuButton.setMinWidth(16.0);
+        taskMenuButton.setMnemonicParsing(false);
+        taskMenuButton.setPrefHeight(121.0);
+        taskMenuButton.setPrefWidth(20.0);
+        taskMenuButton.setCursor(Cursor.HAND);
+        taskMenuButton.getStyleClass().add("three-dots-button");
+        taskMenuButton.setStyle("-fx-background-color: transparent;");
+
+        ImageView icon = createShadowIcon("/mryazik/github/io/icons/three_point_vertical.png", 16.0, 16.0, Color.web("#282a2e"), 1.0);
+        taskMenuButton.setGraphic(icon);
+
+        // Пункты меню задачи
+        MenuItem rename = new MenuItem("Переименовать задачу", createShadowIcon("/mryazik/github/io/icons/edit.png", 16.0, 16.0, Color.web("#282a2e"), 1.0));
+        MenuItem details = new MenuItem("Детали задачи", createShadowIcon("/mryazik/github/io/icons/info.png", 16.0, 16.0, Color.web("#282a2e"), 1.0));
+        MenuItem changeGroup = new MenuItem("Сменить группу", createShadowIcon("/mryazik/github/io/icons/group.png", 16.0, 16.0, Color.web("#282a2e"), 1.0));
+        MenuItem delete = new MenuItem("Удалить задачу", createShadowIcon("/mryazik/github/io/icons/bin.png", 16.0, 16.0, Color.RED, 1.0));
+        delete.setStyle("-fx-text-fill: red;");
+
+        taskMenuButton.getItems().addAll(rename, details, changeGroup, delete);
+        taskRow.getChildren().addAll(checkBox, spacer, taskMenuButton);
+
+        logger.log(Level.INFO, "Загружена новая задача: " + taskText);
+        return taskRow;
+    }
+
+    // Вспомогательный метод генерации иконок с эффектом Shadow (один в один как в FXML)
+    private static ImageView createShadowIcon(String path, double w, double h, Color color, double shadowHeight) {
+        ImageView iv = new ImageView();
+        iv.setFitWidth(w);
+        iv.setFitHeight(h);
+        iv.setPickOnBounds(true);
+        iv.setPreserveRatio(true);
+        try {
+            iv.setImage(new Image(elements.class.getResourceAsStream(path)));
+        } catch (Exception e) {
+            System.err.println("Иконка не найдена: " + path);
+        }
+        Shadow shadow = new Shadow(0.0, color);
+        shadow.setHeight(shadowHeight);
+        iv.setEffect(shadow);
+        return iv;
     }
 }

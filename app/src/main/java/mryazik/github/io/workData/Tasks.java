@@ -8,8 +8,6 @@ import java.util.logging.Level;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Tasks {
-    @JsonProperty(value = "project_id")
-    private int project_id = 0;
     @JsonProperty(value = "groups_id")
     private int groups_id = 0;
     @JsonProperty(value = "tasks_id")
@@ -22,9 +20,8 @@ public class Tasks {
     private int priority = 10;
 
     public Tasks() {};
-    public Tasks(int project_id, int groups_id, int task_id, String name_task, String description, int priority)
+    public Tasks(int groups_id, int task_id, String name_task, String description, int priority)
     {
-        this.project_id = project_id;
         this.groups_id = groups_id;
         this.task_id = task_id;
         this.name_task = name_task;
@@ -37,6 +34,9 @@ public class Tasks {
     {
         return this.task_id;
     }
+
+    @JsonIgnore
+    public int getGroupsId() {return this.groups_id;}
 
     @JsonIgnore
     public String getNameTask()

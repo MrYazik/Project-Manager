@@ -1,14 +1,18 @@
 package mryazik.github.io.workData;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Groups {
+    @JsonProperty(value = "group_id")
+    private int group_id = 0;
     @JsonProperty(value = "idea_id")
     private int idea_id = 0;
     @JsonProperty(value = "title")
@@ -23,6 +27,37 @@ public class Groups {
         this.idea_id = idea_id;
         this.title = title;
         this.priority = priority;
+
+        Random random = new Random();
+        jsonData jsonObject = workJsonFile.getJsonInfo();
+        // Генерируем id группы, конечно его придётся проверять на повторки, потом когда нибудь исправлю для оптимизации
+        int random_id = random.nextInt();
+
+        jsonObject.getGroups().forEach(group -> {
+            if (random_id == group.getGroupId())
+            {
+                group_id = random.nextInt();
+                // Небольшой шанс остаётся
+            }
+        });
+    }
+
+    @JsonIgnore
+    public int getIdeaId()
+    {
+        return this.idea_id;
+    }
+
+    @JsonIgnore
+    public int getGroupId()
+    {
+        return group_id;
+    }
+
+    @JsonIgnore
+    public String getTitle()
+    {
+        return this.title;
     }
 
     public void addTasks(List<Integer> tasks_id)

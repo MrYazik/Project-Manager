@@ -32,6 +32,8 @@ public class jsonData {
     // И за того что еть геттер, нет необходимости импользовать jsonProperty
     @JsonIgnore
     private int count_idea = 0;
+    @JsonIgnore
+    private int count_task = 0;
 
     public void addProjects(List<Projects> projects)
     {
@@ -63,6 +65,12 @@ public class jsonData {
         return count_idea;
     }
 
+    public int getCountTasks()
+    {
+        this.count_task++;
+        return count_task;
+    }
+
     public List<Projects> getProjects()
     {
         return this.projects;
@@ -71,6 +79,8 @@ public class jsonData {
     {
         return this.ideas;
     }
+    public List<Groups> getGroups() {return this.groups;}
+    public List<Tasks> getTasks() {return this.tasks;}
 
     public static String outJsonToString(jsonData data)
     {

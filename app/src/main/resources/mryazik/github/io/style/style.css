@@ -241,3 +241,87 @@ VBox {
     -fx-background-color: transparent;
     -fx-padding: 0;
 }
+
+.task {
+    -fx-background-color: #21262d;
+    -fx-border-radius: 7;
+    -fx-background-radius: 7;
+    -fx-border-width: 1.5;
+    -fx-border-color: #30363d;
+}
+
+
+/*В общем элемент*/
+.task > CheckBox {
+    -fx-text-fill: #c8d1d9;
+}
+
+/* сам флажок */
+
+.check-box .box {
+    -fx-padding: 0;
+    -fx-background-color: #21262d;
+    -fx-border-color: #484f58;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-min-width: 4px;
+    -fx-min-height: 4px;
+    -fx-max-width: 4px;
+    -fx-max-height: 4px;
+}
+
+/*!* Обязательно масштабируем саму галочку под новый размер *!*/
+/*.check-box:selected .mark {*/
+/*    !* Смещение галочки, чтобы она была ровно по центру *!*/
+/*    -fx-min-width: 10px;*/
+/*    -fx-min-height: 10px;*/
+/*    -fx-max-width: 10px;*/
+/*    -fx-max-height: 10px;*/
+/*}*/
+
+/*!* Базовый стиль для нашей кнопки *!*/
+/*.three-dots-button {*/
+/*    -fx-background-color: #e0e0e0; !* Серый цвет фона *!*/
+/*    -fx-text-fill: #333333;        !* Цвет текста (точек) *!*/
+/*    -fx-font-size: 16px;           !* Размер точек *!*/
+/*    -fx-font-weight: bold;*/
+/*    -fx-background-radius: 4;   !* Делает кнопку идеально круглой *!*/
+/*    -fx-alignment: center;*/
+/*}*/
+
+/*!* Эффект при наведении мыши *!*/
+/*.three-dots-button:hover {*/
+/*    -fx-background-color: #cccccc;*/
+/*    -fx-cursor: hand;*/
+/*}*/
+
+/* СКРЫВАЕМ СТРЕЛКУ (самое важное) */
+.three-dots-button .arrow-button {
+    -fx-padding: 0;
+}
+.three-dots-button .arrow {
+    -fx-background-color: transparent; /* Делает стрелку невидимой */
+    -fx-padding: 0;
+}
+
+/* Убираем внутренние рамки и отступы у самого пункта меню */
+.custom-menu-item {
+    -fx-background-color: transparent; /* Или ваш цвет */
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 0; /* Убирает внутренние зазоры */
+}
+
+/* Убираем рамку фокуса, которая часто выглядит как белая или синяя линия */
+.custom-menu-item:focused {
+    -fx-background-color: #34495e; /* Цвет при наведении/фокусе */
+    -fx-background-insets: 0;
+}
+
+/* Если рамка осталась, значит она наложена на внутренний контейнер (Content) */
+.custom-menu-item .content {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
