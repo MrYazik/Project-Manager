@@ -27,12 +27,13 @@ public class jsonData {
     @JsonProperty(value = "tasks")
     private List<Tasks> tasks = new ArrayList<>();
 
-    @JsonIgnore
+    @JsonProperty(value = "count_projects")
     private int count = 0;
-    // И за того что еть геттер, нет необходимости импользовать jsonProperty
-    @JsonIgnore
+    @JsonProperty(value = "count_ideas")
     private int count_idea = 0;
-    @JsonIgnore
+    @JsonProperty(value = "count_groups")
+    private int count_groups = 0;
+    @JsonProperty(value = "count_tasks")
     private int count_task = 0;
 
     public void addProjects(List<Projects> projects)
@@ -53,22 +54,29 @@ public class jsonData {
         this.tasks.addAll(tasks);
     }
 
+    @JsonIgnore
     public int getCountProjects()
     {
         this.count++;
         return this.count;
     }
-
+    @JsonIgnore
     public int getCountIdeas()
     {
         this.count_idea++;
         return count_idea;
     }
-
+    @JsonIgnore
     public int getCountTasks()
     {
         this.count_task++;
         return count_task;
+    }
+    @JsonIgnore
+    public int getCountGroups()
+    {
+        this.count_groups++;
+        return count_groups;
     }
 
     public List<Projects> getProjects()

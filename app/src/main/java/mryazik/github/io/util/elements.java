@@ -140,6 +140,7 @@ public class elements {
         hbox.setOpacity(0.81);
         hbox.setPrefHeight(42.0);
         hbox.setPrefWidth(352.0);
+        hbox.setMinWidth(50);
         hbox.setPadding(new Insets(0, 10.0, 0, 0)); // right="10.0"
 
         // inline-стили родительского контейнера
@@ -174,11 +175,11 @@ public class elements {
         warningIcon.setEffect(shadowEffect);
 
         // 3. Создаем текстовую метку (Label)
-        Label label = new Label("Несохранённые изменения");
+        Label label = new Label("Несохранённые изменения внутри заметки к идее");
         label.setMinWidth(Label.USE_PREF_SIZE); // minWidth="-Infinity"
         label.setTextFill(Color.web("#f59e0c"));
         // System Bold Italic, size 13
-        label.setFont(Font.font("System", FontWeight.BOLD, FontPosture.ITALIC, 13.0));
+        label.setFont(Font.font("System", FontWeight.BOLD, FontPosture.ITALIC, 12.0));
 
         // 4. Создаем невидимую распорку (Pane-пружину)
         Pane spacer = new Pane();

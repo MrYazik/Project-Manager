@@ -22,6 +22,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class inProject {
     public static int current_idea_id = -1;
+    @FXML
+    VBox in_project;
+
 
     @FXML
     Label name_project;
@@ -68,6 +71,9 @@ public class inProject {
     @FXML
     VBox list_groups;
 
+    @FXML VBox null_note; // Поверх заметки к идее
+    @FXML VBox null_task; // Поверх списка задач
+
     public void init(String name_project)
     {
         // Инициализируем называние
@@ -88,7 +94,8 @@ public class inProject {
         // Если сейчас нету активной заметки, то пишем везде то что не одна заметка не выбрана, если есть то подставляем нормальные меню меню
         if (current_idea_id == -1)
         {
-
+            null_note.setVisible(true);
+            null_task.setVisible(true);
         }
 
         // Получаем список идей
@@ -98,8 +105,11 @@ public class inProject {
             if (current_project.get().isProjectContainsThisNote(idea.getId())) {
                 // Добавляем элемент и действие по его нажатию
                 list_notes.getChildren().add(elements.notesButton(idea.getTitle(), () -> {
-//                    // Очищаем todo меню
-//                    list_groups.getChildren().clear();
+                    current_idea_id = idea.getId();
+                    notes_at_notes.setText(idea.getNote());
+
+                    // Очищаем todo меню
+                    list_groups.getChildren().clear();
 
                     // Если нажать то подгружаются все группы и задачи относящиеся к идее
                     // Группы
@@ -107,7 +117,6 @@ public class inProject {
                         if (group.getIdeaId() == idea.getId())
                         {
                             VBox newGroupElement = elements.createGroupHeader(group.getTitle(), group.getGroupId(), name_project);
-
                             list_groups.getChildren().add(newGroupElement);
 
                             // Добавляем задачи
@@ -119,22 +128,25 @@ public class inProject {
                         }
                     });
 
-
-                    current_idea_id = idea.getId();
-                    notes_at_notes.setText(idea.getNote());
+                    // Убираем заглушку что нет заметки
+                    null_note.setVisible(false);
+                    // Убираем заглушку что нет списка задач
+                    null_task.setVisible(false);
 
                     // Перебираем кнопки и ставим активный класс только у нажатого элемента
                     list_notes.getChildren().forEach((Object button) -> {
                         Button toButton = (Button) button;
                         toButton.getStyleClass().removeAll("in_project-inactive-files-menu-button", "in_project-files-menu-button");
 
-                        if (!toButton.getText().equals(idea.getTitle())) {
+                        if (!toButton.getText().equals(idea.getTitle())) { // если не активная кнопка
                             toButton.getStyleClass().add("in_project-inactive-files-menu-button");
+
                         } else {
-                            HBox apply_menu = elements.createUnsavedChangesMenu();
+                            HBox apply_menu = elements.createUnsavedChangesMenu(); // Создаём меню неприменённых изменений
+
                             ChangeListener listenner = (observable, oldValue, newValue) -> {
                                 if (!oldValue.equals(newValue) && !is_text_apply_on.get()) {
-                                    notes_at_idea_vbox.getChildren().add(apply_menu);
+                                    in_project.getChildren().add(apply_menu);
                                     is_text_apply_on.set(true);
                                 }
                             };
@@ -142,11 +154,9 @@ public class inProject {
                             // Перед каждым переключением убираем меню подтверждения
                             notes_at_notes.textProperty().removeListener(listenner);
                             notes_at_idea_vbox.getChildren().remove(apply_menu);
-
-
-                            toButton.getStyleClass().add("in_project-files-menu-button");
-
                             notes_at_notes.textProperty().addListener(listenner);
+
+                            toButton.getStyleClass().add("in_project-files-menu-button"); // Добавляем активный дизайн
                         }
                     });
                 }));

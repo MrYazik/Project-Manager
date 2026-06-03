@@ -18,8 +18,8 @@ public class Projects {
     private String title = "";
     @JsonProperty(value = "readme")
     private String readme = "";
-    @JsonProperty(value = "ideas_id")
-    private List<Integer> ideas_id = new ArrayList<>();
+    @JsonProperty(value = "notes_id")
+    private List<Integer> ideas_id = new ArrayList<>(); // опечатка
 
 
     public Projects() {};

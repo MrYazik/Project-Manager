@@ -29,7 +29,7 @@ public class createGroup {
     {
         done.setOnAction(event -> {
             jsonData jsonObject = workJsonFile.getJsonInfo();
-            Groups newGroup = new Groups(inProject.current_idea_id, input_name_group.getText(), 0);
+            Groups newGroup = new Groups(jsonObject.getCountGroups(), inProject.current_idea_id, input_name_group.getText(), 0);
             List<Groups> listGroups = new ArrayList<>();
             listGroups.add(newGroup);
             jsonObject.addGroups(listGroups);

@@ -23,23 +23,11 @@ public class Groups {
     private int priority = 10;
 
     public Groups() {};
-    public Groups(int idea_id, String title, int priority) {
+    public Groups(int group_id, int idea_id, String title, int priority) {
+        this.group_id = group_id;
         this.idea_id = idea_id;
         this.title = title;
         this.priority = priority;
-
-        Random random = new Random();
-        jsonData jsonObject = workJsonFile.getJsonInfo();
-        // Генерируем id группы, конечно его придётся проверять на повторки, потом когда нибудь исправлю для оптимизации
-        int random_id = random.nextInt();
-
-        jsonObject.getGroups().forEach(group -> {
-            if (random_id == group.getGroupId())
-            {
-                group_id = random.nextInt();
-                // Небольшой шанс остаётся
-            }
-        });
     }
 
     @JsonIgnore
