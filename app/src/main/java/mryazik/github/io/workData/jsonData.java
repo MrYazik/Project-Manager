@@ -40,7 +40,6 @@ public class jsonData {
     {
         this.projects.addAll(projects);
     }
-
     public void addIdeas(List<Ideas> ideas)
     {
         this.ideas.addAll(ideas);
@@ -52,6 +51,40 @@ public class jsonData {
     public void addTask(List<Tasks> tasks)
     {
         this.tasks.addAll(tasks);
+    }
+
+    public void deleteProject(Projects project)
+    {
+        projects.remove(project);
+    }
+    public void deleteIdea(Ideas idea)
+    {
+// 1. Находим группу, которую нужно удалить
+        groups.stream()
+                .filter(group -> group.getIdeaId() == idea.getId())
+                .findFirst()
+                .ifPresent(groupToDelete -> {
+                    // 2. Удаляем все задачи, связанные с этой найденной группой
+                    tasks.removeIf(task -> task.getGroupsId() == groupToDelete.getGroupId());
+                });
+
+// 3. Теперь безопасно удаляем саму группу (или группы) из списка
+        groups.removeIf(group -> group.getIdeaId() == idea.getId());
+
+        // Удаляем саму идею
+        ideas.remove(idea);
+    }
+    public void deleteGroup(Groups group)
+    {
+        // Безопасно удаляем все задачи, связанные с этой группой
+        tasks.removeIf(task -> task.getGroupsId() == group.getGroupId());
+
+        // Удаляем саму группу
+        groups.remove(group);
+    }
+    public void deleteTask(Tasks task)
+    {
+        tasks.remove(task);
     }
 
     @JsonIgnore

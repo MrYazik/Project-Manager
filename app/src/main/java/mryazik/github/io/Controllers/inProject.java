@@ -90,14 +90,6 @@ public class inProject {
             }
         });
 
-
-        // Если сейчас нету активной заметки, то пишем везде то что не одна заметка не выбрана, если есть то подставляем нормальные меню меню
-        if (current_idea_id == -1)
-        {
-            null_note.setVisible(true);
-            null_task.setVisible(true);
-        }
-
         // Получаем список идей
         List<Ideas> ideas = jsonObject.getIdeas();
 
@@ -122,7 +114,7 @@ public class inProject {
                             // Добавляем задачи
                             jsonObject.getTasks().forEach(task -> {
                                 if (task.getGroupsId() == group.getGroupId()) {
-                                    newGroupElement.getChildren().add(elements.createTaskRow(task.getNameTask()));
+                                    newGroupElement.getChildren().add(elements.createTaskRow(task.getNameTask(), task.getTaskId(), name_project));
                                 }
                             });
                         }
@@ -142,57 +134,67 @@ public class inProject {
                             toButton.getStyleClass().add("in_project-inactive-files-menu-button");
 
                         } else {
-                            HBox apply_menu = elements.createUnsavedChangesMenu(); // Создаём меню неприменённых изменений
-
-                            ChangeListener listenner = (observable, oldValue, newValue) -> {
-                                if (!oldValue.equals(newValue) && !is_text_apply_on.get()) {
-                                    in_project.getChildren().add(apply_menu);
-                                    is_text_apply_on.set(true);
-                                }
-                            };
-
-                            // Перед каждым переключением убираем меню подтверждения
-                            notes_at_notes.textProperty().removeListener(listenner);
-                            notes_at_idea_vbox.getChildren().remove(apply_menu);
-                            notes_at_notes.textProperty().addListener(listenner);
-
                             toButton.getStyleClass().add("in_project-files-menu-button"); // Добавляем активный дизайн
                         }
                     });
                 }));
+            }
+        });
 
-                // Если одна из созданных кнопок совпадает по id, то делаем её активной
 
-                if (idea.getId() == current_idea_id)
+        // Если сейчас нету активной заметки, то пишем везде то что не одна заметка не выбрана, если есть то подставляем нормальные меню меню
+        if (current_idea_id == -1)
+        {
+            null_note.setVisible(true);
+            null_task.setVisible(true);
+        } else {
+            AtomicReference<Ideas> current_idea = new AtomicReference<>(new Ideas());
+
+            jsonObject.getIdeas().forEach(idea -> {
+                if (idea.getId() == current_idea_id) {
+                    current_idea.set(idea);
+                }
+            });
+
+            // Перебираем кнопки и ставим активный класс только у нажатого элемента
+            list_notes.getChildren().forEach((Object button) -> {
+                Button toButton = (Button) button;
+                toButton.getStyleClass().removeAll("in_project-inactive-files-menu-button", "in_project-files-menu-button");
+
+                if (!toButton.getText().equals(current_idea.get().getTitle())) { // если не активная кнопка
+                    toButton.getStyleClass().add("in_project-inactive-files-menu-button");
+                    System.out.println("Кнопка: " + ((Button) button).getText() + " не активная");
+                } else {
+                    toButton.getStyleClass().add("in_project-files-menu-button");
+                    System.out.println("Кнопка: " + ((Button) button).getText() + " активная");// Добавляем активный дизайн
+                }
+            });
+
+
+            notes_at_notes.setText(current_idea.get().getNote());
+            // Очищаем todo меню
+            list_groups.getChildren().clear();
+
+            // Если нажать то подгружаются все группы и задачи относящиеся к идее
+            // Группы
+            jsonObject.getGroups().forEach((group) -> {
+                if (group.getIdeaId() == current_idea.get().getId())
                 {
-                    // Перебираем кнопки и ставим активный класс только у нажатого элемента
-                    list_notes.getChildren().forEach((Object button) -> {
-                        Button toButton = (Button) button;
-                        toButton.getStyleClass().removeAll("in_project-inactive-files-menu-button", "in_project-files-menu-button");
+                    VBox newGroupElement = elements.createGroupHeader(group.getTitle(), group.getGroupId(), name_project);
+                    list_groups.getChildren().add(newGroupElement);
 
-                        if (!toButton.getText().equals(idea.getTitle())) {
-                            toButton.getStyleClass().add("in_project-inactive-files-menu-button");
-                        } else {
-                            HBox apply_menu = elements.createUnsavedChangesMenu();
-                            ChangeListener listenner = (observable, oldValue, newValue) -> {
-                                if (!oldValue.equals(newValue) && !is_text_apply_on.get()) {
-                                    notes_at_idea_vbox.getChildren().add(apply_menu);
-                                    is_text_apply_on.set(true);
-                                }
-                            };
-
-                            // Перед каждым переключением убираем меню подтверждения
-                            notes_at_notes.textProperty().removeListener(listenner);
-                            notes_at_idea_vbox.getChildren().remove(apply_menu);
-
-
-                            toButton.getStyleClass().add("in_project-files-menu-button");
-
-                            notes_at_notes.textProperty().addListener(listenner);
+                    // Добавляем задачи
+                    jsonObject.getTasks().forEach(task -> {
+                        if (task.getGroupsId() == group.getGroupId()) {
+                            newGroupElement.getChildren().add(elements.createTaskRow(task.getNameTask(), task.getTaskId(), name_project));
                         }
                     });
                 }
-            }
-        });
+            });
+
+            null_note.setVisible(false);
+            null_task.setVisible(false);
+
+        }
     }
 }

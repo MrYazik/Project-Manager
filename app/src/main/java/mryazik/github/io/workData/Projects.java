@@ -42,6 +42,8 @@ public class Projects {
     public void changeReadme(String readme) {this.readme = readme;}
     @JsonIgnore
     public String getTitle() {return  this.title;}
+    @JsonIgnore
+    public int getId() {return this.id;}
 
     public boolean isProjectContainsThisNote(int id)
     {

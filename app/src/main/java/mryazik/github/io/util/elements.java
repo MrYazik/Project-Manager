@@ -30,7 +30,11 @@ import mryazik.github.io.Classes.layoutLoad;
 import mryazik.github.io.Classes.modalWindow;
 import mryazik.github.io.Controllers.createTask;
 import mryazik.github.io.Controllers.inProject;
+import mryazik.github.io.workData.Groups;
+import mryazik.github.io.workData.jsonData;
+import mryazik.github.io.workData.workJsonFile;
 
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -97,7 +101,7 @@ public class elements {
         button.setMnemonicParsing(false);
         button.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
         button.setMinWidth(100.0);
-        button.setMinHeight(23.0);
+        button.setMinHeight(27.0);
         button.setMaxWidth(Double.MAX_VALUE);
         VBox.setVgrow(button, Priority.ALWAYS);
 
@@ -285,6 +289,22 @@ public class elements {
             controller.init(loader, group_id, name_project);
         });
 
+        // Удаление группы
+        delete.setOnAction(event -> {
+            jsonData jsonObject = workJsonFile.getJsonInfo();
+
+            jsonObject.getGroups().forEach(group -> {
+                if (group.getGroupId() == group_id) {
+                    jsonObject.deleteGroup(group);
+                    workJsonFile.changeJson(jsonObject);
+
+                    FXMLLoader loader = layoutLoad.loadVBoxInCenter("in-project.fxml");
+                    inProject controller = loader.getController();
+                    controller.init(name_project);
+                }
+            });
+        });
+
         groupMenuButton.getItems().addAll(rename, createTask, completeAll, delete);
         header.getChildren().addAll(groupLabel, spacer, groupMenuButton);
 
@@ -296,7 +316,7 @@ public class elements {
      * ФУНКЦИЯ 2: Создает независимую строку задачи.
      * @param taskText Текст задачи
      */
-    public static HBox createTaskRow(String taskText) {
+    public static HBox createTaskRow(String taskText, int id, String name_project) {
         HBox taskRow = new HBox();
         taskRow.setAlignment(Pos.CENTER_LEFT);
         taskRow.setPrefHeight(44.0);
@@ -336,7 +356,7 @@ public class elements {
         taskMenuButton.getStyleClass().add("three-dots-button");
         taskMenuButton.setStyle("-fx-background-color: transparent;");
 
-        ImageView icon = createShadowIcon("/mryazik/github/io/icons/three_point_vertical.png", 16.0, 16.0, Color.web("#282a2e"), 1.0);
+        ImageView icon = createShadowIcon("/mryazik/github/io/icons/three_point_vertical.png", 16.0, 16.0, Color.web("#8b949e"), 1.0);
         taskMenuButton.setGraphic(icon);
 
         // Пункты меню задачи
@@ -346,8 +366,28 @@ public class elements {
         MenuItem delete = new MenuItem("Удалить задачу", createShadowIcon("/mryazik/github/io/icons/bin.png", 16.0, 16.0, Color.RED, 1.0));
         delete.setStyle("-fx-text-fill: red;");
 
+        // Действие на кнопку удаление задачи
+        delete.setOnAction(action -> {
+            jsonData jsonObject = workJsonFile.getJsonInfo();
+
+            // Получаем задачу
+            jsonObject.getTasks().forEach(task -> {
+                if (task.getTaskId() == id)
+                {
+                    jsonObject.deleteTask(task);
+                    workJsonFile.changeJson(jsonObject);
+
+                    FXMLLoader loader = layoutLoad.loadVBoxInCenter("in-project.fxml");
+                    inProject controller = loader.getController();
+                    controller.init(name_project);
+                }
+            });
+        });
+
         taskMenuButton.getItems().addAll(rename, details, changeGroup, delete);
         taskRow.getChildren().addAll(checkBox, spacer, taskMenuButton);
+
+        VBox.setMargin(taskRow, new Insets(0.0, 0.0, 7.0, 0.0));
 
         logger.log(Level.INFO, "Загружена новая задача: " + taskText);
         return taskRow;
