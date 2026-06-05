@@ -44,8 +44,8 @@ VBox {
 /* Left Menu */
 
 .left-menu-main {
-    -fx-border-radius: 19;
-    -fx-background-radius: 19;
+    -fx-border-radius: 0 19 19 0;
+    -fx-background-radius: 0 19 19 0;
     -fx-border-color: #30363d;
     -fx-border-width: 3;
     -fx-background-color: #181a1c;
@@ -90,6 +90,23 @@ VBox {
     -fx-border-color: #8b5cf6;
     -fx-border-width: 1.4;
     -fx-background-color: #231f32;
+    -fx-text-fill: #c8d1d9;
+}
+
+.left-select-project-button-inactive {
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: transparent;
+    -fx-border-width: 1.4;
+    -fx-background-color: transparent;
+    -fx-text-fill: #88919b;
+}
+.left-select-project-button-inactive:hover {
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: transparent;
+    -fx-border-width: 1.4;
+    -fx-background-color: #26262e;
     -fx-text-fill: #c8d1d9;
 }
 

@@ -162,7 +162,7 @@
                               <Insets top="10.0" />
                            </padding>
                         </VBox>
-                        <VBox fx:id="null_note" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="166.0" prefWidth="197.0" style="-fx-background-color: #181a1c;">
+                        <VBox fx:id="null_note" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="174.0" prefWidth="197.0" style="-fx-background-color: #181a1c; -fx-border-radius: 0 0 15 15; -fx-background-radius: 0 0 15 15;">
                            <children>
                               <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="37.0" style="-fx-background-color: #131517; -fx-border-color: #1a1b1f; -fx-border-radius: 8; -fx-background-radius: 8;">
                                  <children>
@@ -196,7 +196,7 @@
             </VBox>
             <StackPane>
                <children>
-                  <VBox>
+                  <VBox style="-fx-background-radius: 0 0 15 0;">
                      <children>
                         <HBox maxWidth="1.7976931348623157E308" minWidth="100.0">
                            <children>

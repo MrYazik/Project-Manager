@@ -81,7 +81,6 @@ public class elements {
 
                 // Сбрасываем текущую идею
                 inProject.current_idea_id = -1;
-
                 controller.init(projectName);
             } catch (Exception e) {
                 logger.log(Level.SEVERE, "Не удалось загрузить in-project", e);
