@@ -41,7 +41,7 @@ public class leftMenu {
 
         for (Projects project : listProject)
         {
-            list_projects.getChildren().add(elements.projectInLeftMenu(project.getTitle()));
+            list_projects.getChildren().add(elements.projectInLeftMenu(project.getTitle(), project.getId()));
         }
     }
 }

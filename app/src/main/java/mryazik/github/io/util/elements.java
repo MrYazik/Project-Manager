@@ -10,12 +10,9 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Shadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.FontPosture;
 import javafx.scene.control.Label;
 import javafx.scene.control.CheckBox;
@@ -30,10 +27,13 @@ import mryazik.github.io.Classes.layoutLoad;
 import mryazik.github.io.Classes.modalWindow;
 import mryazik.github.io.Controllers.createTask;
 import mryazik.github.io.Controllers.inProject;
+import mryazik.github.io.Controllers.leftMenu;
 import mryazik.github.io.workData.Groups;
+import mryazik.github.io.workData.Projects;
 import mryazik.github.io.workData.jsonData;
 import mryazik.github.io.workData.workJsonFile;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,8 +41,16 @@ import java.util.logging.Logger;
 public class elements {
     static Logger logger = Logger.getLogger(elements.class.getName());
 
-    public static Button projectInLeftMenu(String projectName)
+    public static HBox projectInLeftMenu(String projectName, int project_id)
     {
+        HBox hbox = new HBox();
+        hbox.setCursor(Cursor.HAND);
+        hbox.setMaxWidth(Double.MAX_VALUE);
+        hbox.setMaxHeight(Region.USE_COMPUTED_SIZE);
+
+        // Внешний отступ снизу (VBox.margin)
+        VBox.setMargin(hbox, new Insets(0, 0, 10, 0));
+
         Button button = new Button(projectName);
 
         // Основные настройки
@@ -71,9 +79,6 @@ public class elements {
         // Внутренний отступ (padding)
         button.setPadding(new Insets(0, 0, 0, 15.0)); // left=15, остальные 0
 
-        // Внешний отступ снизу (VBox.margin)
-        VBox.setMargin(button, new Insets(0, 0, 10, 0));
-
         button.setOnAction(event -> {
             try {
                 FXMLLoader loader = layoutLoad.loadVBoxInCenter("in-project.fxml");
@@ -87,7 +92,73 @@ public class elements {
             }
         });
 
-        return button;
+        // Кнопка удалить при наведении
+        Button deleteProject = new Button();
+        deleteProject.setMaxHeight(Double.MAX_VALUE);
+        deleteProject.setMaxWidth(24);
+        deleteProject.setMinWidth(30);
+        deleteProject.getStyleClass().add("left-select-project-button");
+
+        // Функционал кнопки удаления
+        deleteProject.setOnAction(event -> {
+            jsonData jsonObject = workJsonFile.getJsonInfo();
+
+            // Получаем проекты и сверяем id
+            for (Projects project : new ArrayList<>(jsonObject.getProjects())) {
+                if (project.getId() == project_id)
+                {
+                    jsonObject.deleteProject(project);
+
+                    // Перезаписываем
+                    workJsonFile.changeJson(jsonObject);
+
+                    FXMLLoader loader = layoutLoad.loadVBoxInLeft("left-control-list.fxml");
+                    leftMenu controller = loader.getController();
+                    controller.init();
+
+                    logger.log(Level.INFO, "Удалён проект: " + projectName, " Его ID: " + project_id);
+                }
+            }
+        });
+
+        // Создаём картинку мусорки
+        ImageView imageTrash = new ImageView();
+        imageTrash.setImage(new Image(elements.class.getResourceAsStream("/mryazik/github/io/icons/bin.png")));
+        imageTrash.setFitHeight(16);
+        imageTrash.setFitWidth(16);
+
+        // Красим в сам фиолетовый
+        Shadow shadow = new Shadow();
+        shadow.setHeight(0);
+        shadow.setRadius(0);
+        shadow.setWidth(0);
+        shadow.setColor(new Color(0.545, 0.361, 0.965, 1));
+
+        // Красим в фиолетовый цвет // тени // красим в фиолетовы
+        dropShadow.setRadius(30);
+        shadow.setInput(dropShadow);
+        imageTrash.setEffect(shadow);
+
+        deleteProject.setGraphic(imageTrash);
+
+        HBox.setMargin(deleteProject, new Insets(0, 0, 0, 7));
+
+        hbox.setOnMouseEntered(event -> {
+            if (!hbox.getChildren().contains(deleteProject))
+            {
+                hbox.getChildren().add(deleteProject);
+            }
+        });
+
+        hbox.setOnMouseExited(event -> {
+            if (hbox.getChildren().contains(deleteProject))
+            {
+                hbox.getChildren().remove(deleteProject);
+            }
+        });
+
+        hbox.getChildren().add(button);
+        return hbox;
     }
 
     public static Button notesButton(String text, Runnable onClickAction) {
