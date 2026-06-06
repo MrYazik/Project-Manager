@@ -205,7 +205,9 @@ public class elements {
         return button;
     }
 
-    public static HBox createUnsavedChangesMenu() {
+    public static HBox createUnsavedChangesMenu(int idea_id, String newText) {
+
+
         // 1. Создаем и настраиваем корневой HBox
         HBox hbox = new HBox();
         hbox.setId("apply_menu");

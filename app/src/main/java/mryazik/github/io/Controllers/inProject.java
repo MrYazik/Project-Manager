@@ -1,6 +1,5 @@
 package mryazik.github.io.Controllers;
 
-import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,9 +18,14 @@ import mryazik.github.io.workData.workJsonFile;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class inProject {
     public static int current_idea_id = -1;
+    public static boolean isNoteCanChangedManually = false;
+    Logger logger = Logger.getLogger(inProject.class.getName());
+
     @FXML
     VBox in_project;
 
@@ -66,8 +70,6 @@ public class inProject {
         });
     }
 
-    AtomicBoolean is_text_apply_on = new AtomicBoolean(false);
-
     @FXML
     VBox list_groups;
 
@@ -92,13 +94,47 @@ public class inProject {
 
         // Получаем список идей
         List<Ideas> ideas = jsonObject.getIdeas();
+        AtomicBoolean unsavedMenuHas = new AtomicBoolean(false); // если имеется меню несохранённых изменений
+
 
         ideas.forEach((idea) -> {
             if (current_project.get().isProjectContainsThisNote(idea.getId())) {
+
                 // Добавляем элемент и действие по его нажатию
                 list_notes.getChildren().add(elements.notesButton(idea.getTitle(), () -> {
+                    if (unsavedMenuHas.get())
+                    {
+                        in_project.getChildren().removeLast();
+                        unsavedMenuHas.set(false);
+                    }
+
+                    isNoteCanChangedManually = false; // ставим то что заметку нельзя изменять вручную
+
                     current_idea_id = idea.getId();
                     notes_at_notes.setText(idea.getNote());
+
+                    isNoteCanChangedManually = true;
+
+                    // Ставим отслеживание изменения заметки к идее
+                    notes_at_notes.textProperty().addListener((obs, oldText, newText) -> {
+                        HBox unsavedMenu =
+                                elements.createUnsavedChangesMenu(idea.getId(), newText);
+
+                        // Если заметку можно изменять вручную
+                        if (isNoteCanChangedManually) {
+                            if (unsavedMenuHas.get())
+                            {
+                                in_project.getChildren().removeLast();
+                            }
+
+                            in_project.getChildren().add(unsavedMenu);
+                            unsavedMenuHas.set(true);
+                        } else {
+                            in_project.getChildren().remove(unsavedMenu);
+                            unsavedMenuHas.set(false);
+                            logger.log(Level.INFO, "Было переключение, пользователь не изменил текст заметки вручную");
+                        }
+                    });
 
                     // Очищаем todo меню
                     list_groups.getChildren().clear();
@@ -172,6 +208,9 @@ public class inProject {
 
 
             notes_at_notes.setText(current_idea.get().getNote());
+
+
+
             // Очищаем todo меню
             list_groups.getChildren().clear();
 
