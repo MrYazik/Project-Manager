@@ -78,6 +78,8 @@ public class inProject {
 
     public void init(String name_project)
     {
+        list_notes.getChildren().clear();
+
         // Инициализируем называние
         this.name_project.setText(name_project);
 
@@ -97,6 +99,27 @@ public class inProject {
         AtomicBoolean unsavedMenuHas = new AtomicBoolean(false); // если имеется меню несохранённых изменений
 
 
+        // Ставим отслеживание изменения заметки к идее
+        notes_at_notes.textProperty().addListener((obs, oldText, newText) -> {
+            HBox unsavedMenu =
+                    elements.createUnsavedChangesMenu(current_idea_id, newText);
+
+            // Если заметку можно изменять вручную
+            if (isNoteCanChangedManually) {
+                if (unsavedMenuHas.get())
+                {
+                    in_project.getChildren().removeLast();
+                }
+
+                in_project.getChildren().add(unsavedMenu);
+                unsavedMenuHas.set(true);
+            } else {
+                in_project.getChildren().remove(unsavedMenu);
+                unsavedMenuHas.set(false);
+                logger.log(Level.INFO, "Было переключение, пользователь не изменил текст заметки вручную");
+            }
+        });
+
         ideas.forEach((idea) -> {
             if (current_project.get().isProjectContainsThisNote(idea.getId())) {
 
@@ -114,27 +137,6 @@ public class inProject {
                     notes_at_notes.setText(idea.getNote());
 
                     isNoteCanChangedManually = true;
-
-                    // Ставим отслеживание изменения заметки к идее
-                    notes_at_notes.textProperty().addListener((obs, oldText, newText) -> {
-                        HBox unsavedMenu =
-                                elements.createUnsavedChangesMenu(idea.getId(), newText);
-
-                        // Если заметку можно изменять вручную
-                        if (isNoteCanChangedManually) {
-                            if (unsavedMenuHas.get())
-                            {
-                                in_project.getChildren().removeLast();
-                            }
-
-                            in_project.getChildren().add(unsavedMenu);
-                            unsavedMenuHas.set(true);
-                        } else {
-                            in_project.getChildren().remove(unsavedMenu);
-                            unsavedMenuHas.set(false);
-                            logger.log(Level.INFO, "Было переключение, пользователь не изменил текст заметки вручную");
-                        }
-                    });
 
                     // Очищаем todo меню
                     list_groups.getChildren().clear();
