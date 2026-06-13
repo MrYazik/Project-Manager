@@ -28,10 +28,7 @@ import mryazik.github.io.Classes.modalWindow;
 import mryazik.github.io.Controllers.createTask;
 import mryazik.github.io.Controllers.inProject;
 import mryazik.github.io.Controllers.leftMenu;
-import mryazik.github.io.workData.Groups;
-import mryazik.github.io.workData.Projects;
-import mryazik.github.io.workData.jsonData;
-import mryazik.github.io.workData.workJsonFile;
+import mryazik.github.io.workData.*;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
@@ -40,6 +37,9 @@ import java.util.logging.Logger;
 
 public class elements {
     static Logger logger = Logger.getLogger(elements.class.getName());
+
+    public static final FXMLLoader in_project_fxml = layoutLoad.loadVBoxInCenter("in-project.fxml");
+    public static final inProject controller_in_project = in_project_fxml.getController();
 
     public static HBox projectInLeftMenu(String projectName, int project_id)
     {
@@ -205,7 +205,7 @@ public class elements {
         return button;
     }
 
-    public static HBox createUnsavedChangesMenu(int idea_id, String newText) {
+    public static HBox createUnsavedChangesMenu(int idea_id, String newText, String name_project) {
 
 
         // 1. Создаем и настраиваем корневой HBox
@@ -296,6 +296,23 @@ public class elements {
         changeButton.setCursor(Cursor.HAND);
         changeButton.setFont(Font.font("System", FontWeight.BOLD, FontPosture.ITALIC, 12.0));
         HBox.setMargin(changeButton, new Insets(0, 0, 0, 10.0)); // left="10.0"
+
+        changeButton.setOnAction(event -> {
+
+            // Добавляем действие на кнопку изменить
+            jsonData jsonObject = workJsonFile.getJsonInfo();
+            
+            jsonObject.getIdeas().forEach((Ideas idea) -> {
+                if (idea.getId() == idea_id)
+                {
+                    idea.setNote(newText);
+                    workJsonFile.changeJson(jsonObject);
+
+                    // Перезагружаем in-project
+                    controller_in_project.init(name_project);
+                }
+            });
+        });
 
         // Подключаем стиль и класс из FXML
         changeButton.getStyleClass().add("done_button");

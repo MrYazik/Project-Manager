@@ -33,6 +33,10 @@ public class Ideas {
     @JsonIgnore
     public String getNote() {return this.note;}
     @JsonIgnore
+    public void setNote(String text) {
+        this.note = text;
+    }
+    @JsonIgnore
     public boolean getStatus()
     {
         return this.isComplited;

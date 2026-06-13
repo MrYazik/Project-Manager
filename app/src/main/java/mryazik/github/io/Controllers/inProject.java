@@ -102,7 +102,7 @@ public class inProject {
         // Ставим отслеживание изменения заметки к идее
         notes_at_notes.textProperty().addListener((obs, oldText, newText) -> {
             HBox unsavedMenu =
-                    elements.createUnsavedChangesMenu(current_idea_id, newText);
+                    elements.createUnsavedChangesMenu(current_idea_id, newText, name_project);
 
             // Если заметку можно изменять вручную
             if (isNoteCanChangedManually) {
